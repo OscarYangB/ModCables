@@ -14,11 +14,13 @@
 //==============================================================================
 /**
 */
-class ModCablesAudioProcessorEditor  : public juce::AudioProcessorEditor
+class ModCablesAudioProcessorEditor  : public juce::AudioProcessorEditor, juce::Timer
 {
 public:
     ModCablesAudioProcessorEditor (ModCablesAudioProcessor&);
     ~ModCablesAudioProcessorEditor() override;
+
+    void timerCallback();
 
     //==============================================================================
     void paint (juce::Graphics&) override;
@@ -29,5 +31,12 @@ private:
     // access the processor object that created it.
     ModCablesAudioProcessor& audioProcessor;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ModCablesAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModCablesAudioProcessorEditor)
+
+    juce::Image backgroundImage = juce::ImageFileFormat::loadFrom(
+        BinaryData::Background_png, BinaryData::Background_pngSize);
+
+    juce::Point<int> dragStart;
+    juce::Point<int> currentPoint;
+    bool isDragging = false;
 };

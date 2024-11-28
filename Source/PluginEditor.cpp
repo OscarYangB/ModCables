@@ -13,6 +13,7 @@
 ModCablesAudioProcessorEditor::ModCablesAudioProcessorEditor (ModCablesAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
+    startTimer(50);
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (400, 300);
@@ -21,6 +22,28 @@ ModCablesAudioProcessorEditor::ModCablesAudioProcessorEditor (ModCablesAudioProc
 ModCablesAudioProcessorEditor::~ModCablesAudioProcessorEditor()
 {
 }
+
+void ModCablesAudioProcessorEditor::timerCallback() 
+{
+    juce::Point<int> mousePosition = juce::Desktop::getMousePosition();
+
+    if (juce::ModifierKeys::currentModifiers.isLeftButtonDown() != isDragging) {
+        dragStart = mousePosition;
+        isDragging = !isDragging;
+    }
+
+    if (isDragging) {
+        juce::Point<int> delta = (mousePosition - dragStart) / 10.f;
+
+        if (delta.getDistanceSquaredFromOrigin() < 0.01f) {
+            return; // No delta
+        }
+
+        currentPoint += delta;
+        repaint();
+    }
+}
+
 
 //==============================================================================
 void ModCablesAudioProcessorEditor::paint (juce::Graphics& g)
@@ -33,6 +56,7 @@ void ModCablesAudioProcessorEditor::paint (juce::Graphics& g)
     g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
 
     g.drawRect(juce::Rectangle<float>(100, 100, 200, 200));
+    g.drawImage(backgroundImage, currentPoint.getX(), currentPoint.getY(), 50.0f, 50.0f, 0.0f, 0.0f, 880.0f, 880.0f);
 }
 
 void ModCablesAudioProcessorEditor::resized()
