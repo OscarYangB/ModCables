@@ -13,7 +13,7 @@
 ModCablesAudioProcessorEditor::ModCablesAudioProcessorEditor (ModCablesAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-    startTimer(50);
+    startTimer(20);
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (400, 300);
@@ -25,23 +25,20 @@ ModCablesAudioProcessorEditor::~ModCablesAudioProcessorEditor()
 
 void ModCablesAudioProcessorEditor::timerCallback() 
 {
-    juce::Point<int> mousePosition = juce::Desktop::getMousePosition();
+    juce::Point<int> mousePosition = getMouseXYRelative();
 
     if (juce::ModifierKeys::currentModifiers.isLeftButtonDown() != isDragging) {
         dragStart = mousePosition;
+        anchorPoint = currentPoint;
         isDragging = !isDragging;
     }
 
-    if (isDragging) {
-        juce::Point<int> delta = (mousePosition - dragStart) / 10.f;
-
-        if (delta.getDistanceSquaredFromOrigin() < 0.01f) {
-            return; // No delta
-        }
-
-        currentPoint += delta;
-        repaint();
+    if (!isDragging) {
+        return;
     }
+    
+    currentPoint = anchorPoint + mousePosition - dragStart;
+    repaint();
 }
 
 

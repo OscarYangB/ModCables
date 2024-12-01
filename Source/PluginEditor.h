@@ -37,6 +37,7 @@ private:
         BinaryData::Background_png, BinaryData::Background_pngSize);
 
     juce::Point<int> dragStart;
+    juce::Point<int> anchorPoint;
     juce::Point<int> currentPoint;
     bool isDragging = false;
 };
