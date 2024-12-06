@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "Block.h"
 
 //==============================================================================
 /**
@@ -22,6 +23,8 @@ public:
 
     void timerCallback();
 
+    void updateDragging();
+
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
@@ -33,11 +36,11 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModCablesAudioProcessorEditor)
 
-    juce::Image backgroundImage = juce::ImageFileFormat::loadFrom(
-        BinaryData::Background_png, BinaryData::Background_pngSize);
-
     juce::Point<int> dragStart;
     juce::Point<int> anchorPoint;
     juce::Point<int> currentPoint;
     bool isDragging = false;
+
+    Block block;
+    BlockLookAndFeel globalLookAndFeel;
 };
