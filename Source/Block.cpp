@@ -7,7 +7,9 @@ Block::Block()
 	knob.setValue(50.0);
 	addAndMakeVisible(knob);
 
-	setSize(50, 50);
+	addAndMakeVisible(button);
+
+	setSize(100, 100);
 }
 
 Block::~Block()
@@ -17,8 +19,8 @@ Block::~Block()
 
 void Block::paint(juce::Graphics& g)
 {
-	g.drawImage(backgroundImage, 0.0f, 0.0f, 50.0f, 50.0f, 0.0f, 0.0f, 880.0f, 880.0f);
-	g.drawRect(10, 10, 75, 75);
+	g.drawImage(backgroundImage, 0.0f, 0.0f, getWidth(), getHeight(), 0.0f, 0.0f,
+		backgroundImage.getWidth(), backgroundImage.getHeight());
 	knob.setBounds(10,10,75,75);
-	
+	button.setBounds(0, 0, 40, 40);	
 }

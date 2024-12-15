@@ -4,6 +4,8 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
   <MAINGROUP id="wpd1cs" name="ModCables">
     <GROUP id="{CE4589BF-EBD1-7D79-62D8-AB0CCB18C6C7}" name="Source">
+      <FILE id="d29fNy" name="IconButton.cpp" compile="1" resource="0" file="Source/IconButton.cpp"/>
+      <FILE id="SHOrLD" name="IconButton.h" compile="0" resource="0" file="Source/IconButton.h"/>
       <FILE id="taQtPy" name="BlockLookAndFeel.h" compile="0" resource="0"
             file="Source/BlockLookAndFeel.h"/>
       <FILE id="slCXP0" name="BlockLookAndFeel.cpp" compile="1" resource="0"

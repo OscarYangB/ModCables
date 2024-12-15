@@ -47,3 +47,18 @@ juce::Label* BlockLookAndFeel::createSliderTextBox(juce::Slider& slider)
     label->setJustificationType(juce::Justification::centred);
     return label;
 }
+
+void BlockLookAndFeel::drawToggleButton(juce::Graphics& g, juce::ToggleButton& button, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
+{
+    float scale = (float)juce::jmin(button.getWidth(), button.getHeight()) / buttonDown.getWidth();
+    juce::Image buttonImage = button.getToggleState() ? buttonDown : buttonUp;
+    int width = buttonImage.getWidth() * scale;
+    int height = buttonImage.getHeight() * scale;
+    int x = button.getX() + button.getWidth() / 2.0f - width / 2.0f;
+    int y = button.getY() + button.getHeight() / 2.0f - height / 2.0f;
+    if (button.getToggleState()) {
+        x += -10.0f * (scale / 2.0f);
+        y += -10.0f * (scale / 2.0f);
+    }
+    g.drawImage(buttonImage, x, y, width, height, 0, 0, buttonImage.getWidth(), buttonImage.getHeight());
+}

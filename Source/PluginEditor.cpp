@@ -61,7 +61,7 @@ void ModCablesAudioProcessorEditor::paint (juce::Graphics& g)
     g.drawImage(backgroundImage, currentPoint.getX(), currentPoint.getY(), 50.0f, 50.0f, 0.0f, 0.0f, 880.0f, 880.0f);
     */
 
-    block.setBounds(0, 0, 100, 100);
+    block.setBounds(0, 0, 200, 200);
 }
 
 void ModCablesAudioProcessorEditor::resized()

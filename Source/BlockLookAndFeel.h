@@ -25,9 +25,17 @@ public:
 
     juce::Label* createSliderTextBox(juce::Slider& slider) override;
 
+    void drawToggleButton(juce::Graphics& g, juce::ToggleButton& button,
+        bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override;
+
 private:
     juce::Image knobBackground = juce::ImageFileFormat::loadFrom(
         BinaryData::KnobBackground_png, BinaryData::KnobBackground_pngSize);
     juce::Image knobSlider = juce::ImageFileFormat::loadFrom(
         BinaryData::KnobForeground_png, BinaryData::KnobForeground_pngSize);
+
+    juce::Image buttonUp = juce::ImageFileFormat::loadFrom(
+        BinaryData::OffButton_png, BinaryData::OffButton_pngSize);
+    juce::Image buttonDown = juce::ImageFileFormat::loadFrom(
+        BinaryData::OnButton_png, BinaryData::OnButton_pngSize);
 };
