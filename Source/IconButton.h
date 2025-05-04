@@ -24,6 +24,7 @@ public:
 private:
 	juce::ToggleButton button;
 	juce::ImageComponent icon;
+	juce::Label label;
 };
 
 

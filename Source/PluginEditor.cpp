@@ -16,7 +16,7 @@ ModCablesAudioProcessorEditor::ModCablesAudioProcessorEditor (ModCablesAudioProc
     juce::LookAndFeel::setDefaultLookAndFeel(&globalLookAndFeel);
     addAndMakeVisible(block);
     startTimer(16);
-    setSize (400, 300);
+    setSize(700, 700);
 }
 
 ModCablesAudioProcessorEditor::~ModCablesAudioProcessorEditor()
@@ -31,7 +31,11 @@ void ModCablesAudioProcessorEditor::timerCallback()
 void ModCablesAudioProcessorEditor::updateDragging() {
     juce::Point<int> mousePosition = getMouseXYRelative();
 
-    if (juce::ModifierKeys::currentModifiers.isLeftButtonDown() != isDragging) {
+    bool newIsDragging = juce::ModifierKeys::currentModifiers.isLeftButtonDown();
+    newIsDragging &= !juce::Desktop::getInstance().getMainMouseSource().isUnboundedMouseMovementEnabled();
+    newIsDragging &= !block.getBounds().contains(mousePosition);
+
+    if (newIsDragging != isDragging) {
         dragStart = mousePosition;
         anchorPoint = currentPoint;
         isDragging = !isDragging;
@@ -50,7 +54,7 @@ void ModCablesAudioProcessorEditor::updateDragging() {
 void ModCablesAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    g.fillAll(juce::Colour::fromRGB(73, 62, 53));
 
     /*
     g.setColour (juce::Colours::white);
@@ -61,7 +65,7 @@ void ModCablesAudioProcessorEditor::paint (juce::Graphics& g)
     g.drawImage(backgroundImage, currentPoint.getX(), currentPoint.getY(), 50.0f, 50.0f, 0.0f, 0.0f, 880.0f, 880.0f);
     */
 
-    block.setBounds(0, 0, 200, 200);
+    block.setBounds(currentPoint.x, currentPoint.y, 200, 200);
 }
 
 void ModCablesAudioProcessorEditor::resized()

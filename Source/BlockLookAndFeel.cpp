@@ -32,13 +32,15 @@ void BlockLookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int wid
     g.drawImage(knobSlider, sliderX, sliderY, sliderWidth, sliderHeight, 0.0f, 0.0f,
         knobSlider.getWidth(), knobSlider.getHeight());
 
-    slider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 40, 20);
+    slider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60, 15);
     slider.setNumDecimalPlacesToDisplay(0);
+    slider.setVelocityBasedMode(true);
+    slider.setVelocityModeParameters(5, 0, 0.0, false);
 }
 
 juce::Font BlockLookAndFeel::getLabelFont(juce::Label& label)
 {
-    return juce::Font("Georgia", 20.0f, juce::Font::FontStyleFlags::plain);
+    return juce::Font("Georgia", 14.0f, juce::Font::FontStyleFlags::plain);
 }
 
 juce::Label* BlockLookAndFeel::createSliderTextBox(juce::Slider& slider)
