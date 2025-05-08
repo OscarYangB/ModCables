@@ -15,24 +15,25 @@ void BlockLookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int wid
     float sliderPosProportional, float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider)
 {
     float scale = (float)juce::jmin(width, height) / knobBackground.getWidth();
+    float offsetY = y + 5;
 
     int backgroundWidth = knobBackground.getWidth() * scale;
     int backgroundHeight = knobBackground.getHeight() * scale;
     int backgroundX = x + width / 2.0f - backgroundWidth / 2.0f;
-    int backgroundY = y + height / 2.0f - backgroundHeight / 2.0f;
+    int backgroundY = offsetY + height / 2.0f - backgroundHeight / 2.0f;
     g.drawImage(knobBackground, backgroundX, backgroundY, backgroundWidth, backgroundHeight, 0.0f, 0.0f,
         knobBackground.getWidth(), knobBackground.getHeight());
 
     int sliderWidth = knobSlider.getWidth() * scale;
     int sliderHeight = knobSlider.getHeight() * scale;
     int sliderX = x + width / 2.0f - sliderWidth / 2.0f;
-    int sliderY = y + height / 2.0f - sliderHeight / 2.0f + 15 * scale;
+    int sliderY = offsetY + height / 2.0f - sliderHeight / 2.0f + 15 * scale;
     g.addTransform(juce::AffineTransform::rotation(juce::MathConstants<float>::pi * (sliderPosProportional - 0.5f),
-        x + width / 2.0f - 2 * scale, y + height / 2.0f + 20 * scale));
+        x + width / 2.0f - 2 * scale, offsetY + height / 2.0f + 20 * scale));
     g.drawImage(knobSlider, sliderX, sliderY, sliderWidth, sliderHeight, 0.0f, 0.0f,
         knobSlider.getWidth(), knobSlider.getHeight());
 
-    slider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60, 15);
+    slider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60, 12);
     slider.setNumDecimalPlacesToDisplay(0);
     slider.setVelocityBasedMode(true);
     slider.setVelocityModeParameters(5, 0, 0.0, false);
@@ -40,7 +41,7 @@ void BlockLookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int wid
 
 juce::Font BlockLookAndFeel::getLabelFont(juce::Label& label)
 {
-    return juce::Font("Georgia", 14.0f, juce::Font::FontStyleFlags::plain);
+    return juce::Font("Georgia", 12.0f, juce::Font::FontStyleFlags::plain);
 }
 
 juce::Label* BlockLookAndFeel::createSliderTextBox(juce::Slider& slider)

@@ -11,6 +11,13 @@ Block::Block()
 	addAndMakeVisible(triangle);
 	addAndMakeVisible(saw);
 
+	volumeLabel.setText("Volume", juce::sendNotification);
+	addAndMakeVisible(volumeLabel);
+	pitchLabel.setText("Pitch", juce::sendNotification);
+	addAndMakeVisible(pitchLabel);
+	phaseLabel.setText("Phase", juce::sendNotification);
+	addAndMakeVisible(phaseLabel);
+
 	volume.setSliderStyle(juce::Slider::RotaryVerticalDrag);
 	volume.setRange(0.0, 100.0);
 	volume.setValue(50.0f);
@@ -31,6 +38,15 @@ Block::Block()
 	phase.setDoubleClickReturnValue(true, 0.f);
 	phase.setTextValueSuffix(" deg");
 	addAndMakeVisible(phase);
+
+	attackLabel.setText("Attack", juce::sendNotification);
+	addAndMakeVisible(attackLabel);
+	decayLabel.setText("Decay", juce::sendNotification);
+	addAndMakeVisible(decayLabel);
+	sustainLabel.setText("Sustain", juce::sendNotification);
+	addAndMakeVisible(sustainLabel);
+	releaseLabel.setText("Release", juce::sendNotification);
+	addAndMakeVisible(releaseLabel);
 	
 	attack.setSliderStyle(juce::Slider::RotaryVerticalDrag);
 	attack.setRange(0.0f, 2000.0f);
@@ -65,6 +81,19 @@ Block::Block()
 
 	addAndMakeVisible(keyTrack);
 
+	volumeMod.setImage(juce::Image(juce::ImageFileFormat::loadFrom(BinaryData::EmptyConnector_Yellow_png, BinaryData::EmptyConnector_Yellow_pngSize)));
+	addAndMakeVisible(volumeMod);
+	
+	juce::Image image = juce::Image(juce::ImageFileFormat::loadFrom(BinaryData::EmptyConnector_png, BinaryData::EmptyConnector_pngSize));
+	pitchMod.setImage(image);
+	addAndMakeVisible(pitchMod);
+
+	phaseMod.setImage(juce::Image(juce::ImageFileFormat::loadFrom(BinaryData::EmptyConnector_Red_png, BinaryData::EmptyConnector_Red_pngSize)));
+	addAndMakeVisible(phaseMod);
+
+	output.setImage(juce::Image(juce::ImageFileFormat::loadFrom(BinaryData::EmptyConnector_Gray_png, BinaryData::EmptyConnector_Gray_pngSize)));
+	addAndMakeVisible(output);
+
 	setSize(100, 100);
 }
 
@@ -85,15 +114,29 @@ void Block::paint(juce::Graphics& g)
 	saw.setBounds(40 + 29 * 3, 0, 40.f, 40.f);
 
 	float knobWidth = 45.f;
+	float bottomYPosition = getHeight() - knobWidth - 5.f;
 
+	volumeLabel.setBounds(115, 40, 100, 10);
+	pitchLabel.setBounds(100, 80, 100, 10);
+	phaseLabel.setBounds(125, 120, 100, 10);
+
+	attackLabel.setBounds(0, bottomYPosition, 100, 10);
+	decayLabel.setBounds(50, bottomYPosition, 100, 10);
+	sustainLabel.setBounds(100, bottomYPosition, 100, 10);
+	releaseLabel.setBounds(150, bottomYPosition, 100, 10);
+	
 	volume.setBounds(getWidth() - knobWidth, 20, knobWidth, knobWidth);
 	pitch.setBounds(getWidth() - knobWidth, 60, knobWidth, knobWidth);
-	keyTrack.setBounds(pitch.getX() - 30.f, pitch.getY(), 40.f, 40.f);
+	keyTrack.setBounds(pitch.getX() - 30.f, pitch.getY() + 5, 40.f, 40.f);
 	phase.setBounds(getWidth() - knobWidth, 100, knobWidth, knobWidth);
 
-	attack.setBounds(0.f, getHeight() - knobWidth - 5.f, knobWidth, knobWidth);
-	decay.setBounds(50.f, getHeight() - knobWidth - 5.f, knobWidth, knobWidth);
-	sustain.setBounds(100.f, getHeight() - knobWidth - 5.f, knobWidth, knobWidth);
-	release.setBounds(150.f, getHeight() - knobWidth - 5.f, knobWidth, knobWidth);
+	attack.setBounds(0.f, bottomYPosition, knobWidth, knobWidth);
+	decay.setBounds(50.f, bottomYPosition, knobWidth, knobWidth);
+	sustain.setBounds(100.f, bottomYPosition, knobWidth, knobWidth);
+	release.setBounds(150.f, bottomYPosition, knobWidth, knobWidth);
 
+	volumeMod.setBounds(5, 45, 25, 25);
+	pitchMod.setBounds(5, 80, 25, 25);
+	phaseMod.setBounds(5, 115, 25, 25);
+	output.setBounds(getWidth() - 35, 5, 25, 25);
 }
