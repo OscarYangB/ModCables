@@ -4,6 +4,8 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
   <MAINGROUP id="wpd1cs" name="ModCables">
     <GROUP id="{CE4589BF-EBD1-7D79-62D8-AB0CCB18C6C7}" name="Source">
+      <FILE id="KaUEC0" name="Block.cpp" compile="1" resource="0" file="Source/Block.cpp"/>
+      <FILE id="DckYFJ" name="Block.h" compile="0" resource="0" file="Source/Block.h"/>
       <FILE id="cvUZPb" name="Empty-Connector_Gray.png" compile="0" resource="1"
             file="Source/Empty-Connector_Gray.png"/>
       <FILE id="uMq6Tw" name="Empty-Connector_Red.png" compile="0" resource="1"
@@ -16,8 +18,8 @@
             file="Source/BlockLookAndFeel.h"/>
       <FILE id="slCXP0" name="BlockLookAndFeel.cpp" compile="1" resource="0"
             file="Source/BlockLookAndFeel.cpp"/>
-      <FILE id="Opz9yP" name="Block.cpp" compile="1" resource="0" file="Source/Block.cpp"/>
-      <FILE id="pfN5if" name="Block.h" compile="0" resource="0" file="Source/Block.h"/>
+      <FILE id="Opz9yP" name="Oscillator.cpp" compile="1" resource="0" file="Source/Oscillator.cpp"/>
+      <FILE id="pfN5if" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
       <FILE id="XsrYV4" name="Background.png" compile="0" resource="1" file="Source/Background.png"/>
       <FILE id="y1e1zV" name="Empty-Connector.png" compile="0" resource="1"
             file="Source/Empty-Connector.png"/>

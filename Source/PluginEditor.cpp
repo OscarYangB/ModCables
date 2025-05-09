@@ -15,6 +15,13 @@ ModCablesAudioProcessorEditor::ModCablesAudioProcessorEditor (ModCablesAudioProc
 {
     juce::LookAndFeel::setDefaultLookAndFeel(&globalLookAndFeel);
     addAndMakeVisible(block);
+
+    addAndMakeVisible(options);
+    options.addItem("Create Oscillator", 1);
+    options.addItem("Create Output", 2);
+    options.setVisible(false);
+    options.onChange = [this] { optionSelected(); };
+
     startTimer(16);
     setSize(700, 700);
 }
@@ -28,27 +35,11 @@ void ModCablesAudioProcessorEditor::timerCallback()
     updateDragging();
 }
 
-void ModCablesAudioProcessorEditor::updateDragging() {
-    juce::Point<int> mousePosition = getMouseXYRelative();
-
-    bool newIsDragging = juce::ModifierKeys::currentModifiers.isLeftButtonDown();
-    newIsDragging &= !juce::Desktop::getInstance().getMainMouseSource().isUnboundedMouseMovementEnabled();
-    newIsDragging &= !block.getBounds().contains(mousePosition);
-
-    if (newIsDragging != isDragging) {
-        dragStart = mousePosition;
-        anchorPoint = currentPoint;
-        isDragging = !isDragging;
-    }
-
-    if (!isDragging) {
-        return;
-    }
-
-    currentPoint = anchorPoint + mousePosition - dragStart;
+void ModCablesAudioProcessorEditor::updateDragging() 
+{
+    location += (currentPoint - location) / 2.f;
     repaint();
 }
-
 
 //==============================================================================
 void ModCablesAudioProcessorEditor::paint (juce::Graphics& g)
@@ -65,7 +56,7 @@ void ModCablesAudioProcessorEditor::paint (juce::Graphics& g)
     g.drawImage(backgroundImage, currentPoint.getX(), currentPoint.getY(), 50.0f, 50.0f, 0.0f, 0.0f, 880.0f, 880.0f);
     */
 
-    block.setBounds(currentPoint.x, currentPoint.y, 200, 200);
+    block.setBlockBounds(location.x, location.y, 200, 200);
 }
 
 void ModCablesAudioProcessorEditor::resized()
@@ -76,14 +67,50 @@ void ModCablesAudioProcessorEditor::resized()
 
 void ModCablesAudioProcessorEditor::mouseDown(const juce::MouseEvent& event)
 {
+    if (event.mods.isLeftButtonDown()) 
+    {
+        refreshMouseDragAnchor();
+    }
+    else if (event.mods.isRightButtonDown()) {
+        options.setBounds(event.getMouseDownPosition().x, event.getMouseDownPosition().y, 50, 0);
+        options.showPopup();
+    }
 }
 
 void ModCablesAudioProcessorEditor::mouseUp(const juce::MouseEvent& event)
 {
-
+    if (event.mods.isLeftButtonDown())
+    {
+        refreshMouseDragAnchor();
+    }
 }
 
 void ModCablesAudioProcessorEditor::mouseDrag(const juce::MouseEvent& event)
 {
+    if (event.mods.isLeftButtonDown()) {
+        currentPoint = anchorPoint + getMouseXYRelative() - dragStart;
+    }
+}
 
+void ModCablesAudioProcessorEditor::refreshMouseDragAnchor()
+{
+    dragStart = getMouseXYRelative();
+    anchorPoint = currentPoint;
+}
+
+void ModCablesAudioProcessorEditor::optionSelected()
+{
+    switch (options.getSelectedId())
+    {
+    case 1:
+        // Create oscillator
+        break;
+    case 2:
+        // Create Listener
+        break;
+    default:
+        break;
+    }
+
+    options.setSelectedId(-1);
 }

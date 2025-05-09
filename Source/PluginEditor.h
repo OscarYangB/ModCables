@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "Block.h"
+#include "Oscillator.h"
 
 //==============================================================================
 /**
@@ -31,6 +32,8 @@ public:
     void mouseDown(const juce::MouseEvent& event) override;
     void mouseDrag(const juce::MouseEvent& event) override;
     void mouseUp(const juce::MouseEvent& event) override;
+
+    void refreshMouseDragAnchor();
     
 private:
     // This reference is provided as a quick way for your editor to
@@ -42,8 +45,11 @@ private:
     juce::Point<int> dragStart;
     juce::Point<int> anchorPoint;
     juce::Point<int> currentPoint;
-    bool isDragging = false;
+    juce::Point<int> location;
 
-    Block block;
+    juce::ComboBox options;
+    Oscillator block;
     BlockLookAndFeel globalLookAndFeel;
+
+    void optionSelected();
 };
