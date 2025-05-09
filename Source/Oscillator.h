@@ -3,9 +3,9 @@
 #include <JuceHeader.h>
 #include "BlockLookAndFeel.h"
 #include "IconButton.h"
-#include "Block.h"
+#include "BlockComponent.h"
 
-class Oscillator : public Block
+class Oscillator : public BlockComponent
 {
 public:
 	Oscillator();

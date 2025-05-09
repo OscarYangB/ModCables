@@ -4,14 +4,31 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
   <MAINGROUP id="wpd1cs" name="ModCables">
     <GROUP id="{CE4589BF-EBD1-7D79-62D8-AB0CCB18C6C7}" name="Source">
-      <FILE id="KaUEC0" name="Block.cpp" compile="1" resource="0" file="Source/Block.cpp"/>
-      <FILE id="DckYFJ" name="Block.h" compile="0" resource="0" file="Source/Block.h"/>
-      <FILE id="cvUZPb" name="Empty-Connector_Gray.png" compile="0" resource="1"
-            file="Source/Empty-Connector_Gray.png"/>
-      <FILE id="uMq6Tw" name="Empty-Connector_Red.png" compile="0" resource="1"
-            file="Source/Empty-Connector_Red.png"/>
-      <FILE id="EEzfbC" name="Empty-Connector_Yellow.png" compile="0" resource="1"
-            file="Source/Empty-Connector_Yellow.png"/>
+      <GROUP id="{6E1AAF48-C79A-D5FA-55E9-D8B69FD65A53}" name="Assets">
+        <FILE id="cvUZPb" name="Empty-Connector_Gray.png" compile="0" resource="1"
+              file="Source/Empty-Connector_Gray.png"/>
+        <FILE id="uMq6Tw" name="Empty-Connector_Red.png" compile="0" resource="1"
+              file="Source/Empty-Connector_Red.png"/>
+        <FILE id="EEzfbC" name="Empty-Connector_Yellow.png" compile="0" resource="1"
+              file="Source/Empty-Connector_Yellow.png"/>
+        <FILE id="XsrYV4" name="Background.png" compile="0" resource="1" file="Source/Background.png"/>
+        <FILE id="y1e1zV" name="Empty-Connector.png" compile="0" resource="1"
+              file="Source/Empty-Connector.png"/>
+        <FILE id="ztBFic" name="Knob-Background.png" compile="0" resource="1"
+              file="Source/Knob-Background.png"/>
+        <FILE id="ouolct" name="Knob-Foreground.png" compile="0" resource="1"
+              file="Source/Knob-Foreground.png"/>
+        <FILE id="jw6rQk" name="Off-Button.png" compile="0" resource="1" file="Source/Off-Button.png"/>
+        <FILE id="pJ8ikY" name="On-Button.png" compile="0" resource="1" file="Source/On-Button.png"/>
+        <FILE id="lnyfx1" name="Saw.png" compile="0" resource="1" file="Source/Saw.png"/>
+        <FILE id="SB3RAG" name="Sin.png" compile="0" resource="1" file="Source/Sin.png"/>
+        <FILE id="nwYJGU" name="Square.png" compile="0" resource="1" file="Source/Square.png"/>
+        <FILE id="ub5soT" name="Triangle.png" compile="0" resource="1" file="Source/Triangle.png"/>
+      </GROUP>
+      <FILE id="KaUEC0" name="BlockComponent.cpp" compile="1" resource="0"
+            file="Source/BlockComponent.cpp"/>
+      <FILE id="DckYFJ" name="BlockComponent.h" compile="0" resource="0"
+            file="Source/BlockComponent.h"/>
       <FILE id="d29fNy" name="IconButton.cpp" compile="1" resource="0" file="Source/IconButton.cpp"/>
       <FILE id="SHOrLD" name="IconButton.h" compile="0" resource="0" file="Source/IconButton.h"/>
       <FILE id="taQtPy" name="BlockLookAndFeel.h" compile="0" resource="0"
@@ -20,19 +37,6 @@
             file="Source/BlockLookAndFeel.cpp"/>
       <FILE id="Opz9yP" name="Oscillator.cpp" compile="1" resource="0" file="Source/Oscillator.cpp"/>
       <FILE id="pfN5if" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
-      <FILE id="XsrYV4" name="Background.png" compile="0" resource="1" file="Source/Background.png"/>
-      <FILE id="y1e1zV" name="Empty-Connector.png" compile="0" resource="1"
-            file="Source/Empty-Connector.png"/>
-      <FILE id="ztBFic" name="Knob-Background.png" compile="0" resource="1"
-            file="Source/Knob-Background.png"/>
-      <FILE id="ouolct" name="Knob-Foreground.png" compile="0" resource="1"
-            file="Source/Knob-Foreground.png"/>
-      <FILE id="jw6rQk" name="Off-Button.png" compile="0" resource="1" file="Source/Off-Button.png"/>
-      <FILE id="pJ8ikY" name="On-Button.png" compile="0" resource="1" file="Source/On-Button.png"/>
-      <FILE id="lnyfx1" name="Saw.png" compile="0" resource="1" file="Source/Saw.png"/>
-      <FILE id="SB3RAG" name="Sin.png" compile="0" resource="1" file="Source/Sin.png"/>
-      <FILE id="nwYJGU" name="Square.png" compile="0" resource="1" file="Source/Square.png"/>
-      <FILE id="ub5soT" name="Triangle.png" compile="0" resource="1" file="Source/Triangle.png"/>
       <FILE id="jGTieP" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="BJq3tT" name="PluginProcessor.h" compile="0" resource="0"

@@ -1,20 +1,20 @@
 /*
   ==============================================================================
 
-    Block.cpp
+    BlockComponent.cpp
     Created: 9 May 2025 12:23:49pm
     Author:  Oscar
 
   ==============================================================================
 */
 
-#include "Block.h"
+#include "BlockComponent.h"
 
-Block::Block()
+BlockComponent::BlockComponent()
 {
 }
 
-void Block::mouseDown(const juce::MouseEvent& event)
+void BlockComponent::mouseDown(const juce::MouseEvent& event)
 {
     if (event.mods.isLeftButtonDown())
     {
@@ -22,7 +22,7 @@ void Block::mouseDown(const juce::MouseEvent& event)
     }
 }
 
-void Block::mouseDrag(const juce::MouseEvent& event)
+void BlockComponent::mouseDrag(const juce::MouseEvent& event)
 {
     if (event.mods.isLeftButtonDown())
     {
@@ -30,7 +30,7 @@ void Block::mouseDrag(const juce::MouseEvent& event)
     }
 }
 
-void Block::mouseUp(const juce::MouseEvent& event)
+void BlockComponent::mouseUp(const juce::MouseEvent& event)
 {
     if (event.mods.isLeftButtonDown())
     {
@@ -38,13 +38,18 @@ void Block::mouseUp(const juce::MouseEvent& event)
     }
 }
 
-void Block::refreshMouseDragAnchor()
+void BlockComponent::refreshMouseDragAnchor()
 {
     dragStart = getMouseXYRelative() + getPosition();
     anchorPoint = currentPoint;
 }
 
-void Block::setBlockBounds(int x, int y, int w, int h)
+void BlockComponent::setBlockBounds(int x, int y, int w, int h)
 {
     setBounds(x + currentPoint.x, y + currentPoint.y, w, h);
+}
+
+void BlockComponent::setLocation(juce::Point<int> newLocation)
+{
+    currentPoint = newLocation;
 }

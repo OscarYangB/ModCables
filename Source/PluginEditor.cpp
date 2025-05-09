@@ -14,8 +14,7 @@ ModCablesAudioProcessorEditor::ModCablesAudioProcessorEditor (ModCablesAudioProc
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
     juce::LookAndFeel::setDefaultLookAndFeel(&globalLookAndFeel);
-    addAndMakeVisible(block);
-
+    
     addAndMakeVisible(options);
     options.addItem("Create Oscillator", 1);
     options.addItem("Create Output", 2);
@@ -56,7 +55,10 @@ void ModCablesAudioProcessorEditor::paint (juce::Graphics& g)
     g.drawImage(backgroundImage, currentPoint.getX(), currentPoint.getY(), 50.0f, 50.0f, 0.0f, 0.0f, 880.0f, 880.0f);
     */
 
-    block.setBlockBounds(location.x, location.y, 200, 200);
+    for (BlockComponent* blockComponent : blockComponents) 
+    {
+        blockComponent->setBlockBounds(location.x, location.y, 200, 200);
+    }
 }
 
 void ModCablesAudioProcessorEditor::resized()
@@ -103,8 +105,13 @@ void ModCablesAudioProcessorEditor::optionSelected()
     switch (options.getSelectedId())
     {
     case 1:
-        // Create oscillator
+        {
+        Oscillator* oscillator = new Oscillator();
+        addAndMakeVisible(oscillator);
+        blockComponents.push_back(oscillator);
+        oscillator->setLocation(options.getPosition() - location);
         break;
+        }
     case 2:
         // Create Listener
         break;

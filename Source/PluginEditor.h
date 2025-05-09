@@ -10,7 +10,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "Block.h"
+#include "BlockComponent.h"
 #include "Oscillator.h"
 
 //==============================================================================
@@ -48,7 +48,7 @@ private:
     juce::Point<int> location;
 
     juce::ComboBox options;
-    Oscillator block;
+    std::vector<BlockComponent*> blockComponents = std::vector<BlockComponent*>();
     BlockLookAndFeel globalLookAndFeel;
 
     void optionSelected();
