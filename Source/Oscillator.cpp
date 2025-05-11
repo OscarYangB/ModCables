@@ -1,15 +1,22 @@
 #include "Oscillator.h"
 
-Oscillator::Oscillator()
+Oscillator::Oscillator(OscillatorParams* newParams)
 {
+	params = newParams;
+
 	name.setText("1", juce::sendNotification);
 	name.setInterceptsMouseClicks(false, false);
 	name.setColour(name.textColourId, juce::Colour::fromRGB(0, 0, 0));
 	addAndMakeVisible(name);
 
+	sin.button.setToggleState(true, true);
+	sin.button.addListener(this);
 	addAndMakeVisible(sin);
+	square.button.addListener(this);
 	addAndMakeVisible(square);
+	triangle.button.addListener(this);
 	addAndMakeVisible(triangle);
+	saw.button.addListener(this);
 	addAndMakeVisible(saw);
 
 	volumeLabel.setText("Volume", juce::sendNotification);
@@ -27,6 +34,7 @@ Oscillator::Oscillator()
 	volume.setValue(50.0f);
 	volume.setDoubleClickReturnValue(true, 50.f);
 	volume.setTextValueSuffix("%");
+	volume.addListener(this);
 	addAndMakeVisible(volume);
 
 	pitch.setSliderStyle(juce::Slider::RotaryVerticalDrag);
@@ -34,6 +42,7 @@ Oscillator::Oscillator()
 	pitch.setValue(0.0f);
 	pitch.setDoubleClickReturnValue(true, 0.f);
 	pitch.setTextValueSuffix("%");
+	pitch.addListener(this);
 	addAndMakeVisible(pitch);
 
 	phase.setSliderStyle(juce::Slider::RotaryVerticalDrag);
@@ -41,6 +50,7 @@ Oscillator::Oscillator()
 	phase.setValue(0.0f);
 	phase.setDoubleClickReturnValue(true, 0.f);
 	phase.setTextValueSuffix(" deg");
+	phase.addListener(this);
 	addAndMakeVisible(phase);
 
 	attackLabel.setText("Attack", juce::sendNotification);
@@ -62,6 +72,7 @@ Oscillator::Oscillator()
 	attack.setDoubleClickReturnValue(true, 10.f);
 	attack.setSkewFactor(0.5f);
 	attack.setTextValueSuffix(" ms");
+	attack.addListener(this);
 	addAndMakeVisible(attack);
 
 	decay.setSliderStyle(juce::Slider::RotaryVerticalDrag);
@@ -70,6 +81,7 @@ Oscillator::Oscillator()
 	decay.setDoubleClickReturnValue(true, 50.f);
 	decay.setSkewFactor(0.5f);
 	decay.setTextValueSuffix(" ms");
+	decay.addListener(this);
 	addAndMakeVisible(decay);
 
 	sustain.setSliderStyle(juce::Slider::RotaryVerticalDrag);
@@ -77,6 +89,7 @@ Oscillator::Oscillator()
 	sustain.setValue(100.0f);
 	sustain.setDoubleClickReturnValue(true, 100.f);
 	sustain.setTextValueSuffix("%");
+	sustain.addListener(this);
 	addAndMakeVisible(sustain);
 
 	release.setSliderStyle(juce::Slider::RotaryVerticalDrag);
@@ -85,6 +98,7 @@ Oscillator::Oscillator()
 	release.setDoubleClickReturnValue(true, 100.f);
 	release.setSkewFactor(0.5f);
 	release.setTextValueSuffix(" ms");
+	release.addListener(this);
 	addAndMakeVisible(release);
 
 	addAndMakeVisible(keyTrack);
@@ -114,7 +128,7 @@ void Oscillator::paint(juce::Graphics& g)
 {
 	g.drawImage(backgroundImage, 0.0f, 0.0f, getWidth(), getHeight(), 0.0f, 0.0f, backgroundImage.getWidth(), backgroundImage.getHeight());
 
-	name.setBounds(10, -7, 50, 50);
+	name.setBounds(14, -9, 50, 50);
 
 	sin.setBounds(40, 0, 40.f, 40.f);
 	square.setBounds(40 + 29, 0, 40.f, 40.f);
@@ -147,4 +161,73 @@ void Oscillator::paint(juce::Graphics& g)
 	pitchMod.setBounds(5, 80, 25, 25);
 	phaseMod.setBounds(5, 115, 25, 25);
 	output.setBounds(getWidth() - 35, 5, 25, 25);
+}
+
+void Oscillator::buttonClicked(juce::Button*)
+{
+}
+
+void Oscillator::updateOscillatorParams()
+{
+	params->volume = volume.getValue() / 100.f;
+	params->pitch = pitch.getValue();
+	params->phase = pitch.getValue();
+
+	params->keyTrack = keyTrack.button.getToggleState();
+
+	params->attack = attack.getValue() / 1000.f;
+	params->decay = decay.getValue() / 1000.f;
+	params->sustain = sustain.getValue() / 100.f;
+	params->release = release.getValue() / 1000.f;
+
+	if (sin.button.getToggleState()) {
+		params->type = OscillatorType::SIN;
+	}
+	else if (square.button.getToggleState()) {
+		params->type = OscillatorType::SQUARE;
+	}
+	else if (triangle.button.getToggleState()) {
+		params->type = OscillatorType::TRIANGLE;
+	}
+	else if (saw.button.getToggleState()) {
+		params->type = OscillatorType::SAW;
+	}
+}
+
+void Oscillator::buttonStateChanged(juce::Button* button)
+{
+	if (button == &keyTrack.button) {
+		updateOscillatorParams();
+		return;
+	}
+
+	if (!button->getToggleState()) {
+		return;
+	}
+
+	sin.button.setToggleState(false, false);
+	sin.button.setInterceptsMouseClicks(true, false);
+	
+
+	square.button.setToggleState(false, false);
+	square.button.setInterceptsMouseClicks(true, false);
+
+
+	triangle.button.setToggleState(false, false);
+	triangle.button.setInterceptsMouseClicks(true, false);
+
+
+	saw.button.setToggleState(false, false);
+	saw.button.setInterceptsMouseClicks(true, false);
+
+
+	button->setToggleState(true, false);
+	button->setInterceptsMouseClicks(false, false);
+
+	updateOscillatorParams();
+}
+
+void Oscillator::sliderValueChanged(juce::Slider* slider)
+{
+	updateOscillatorParams();
 }

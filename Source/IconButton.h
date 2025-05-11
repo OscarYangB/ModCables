@@ -21,7 +21,6 @@ public:
 
 	void paint(juce::Graphics&) override;
 
-private:
 	juce::ToggleButton button;
 	juce::ImageComponent icon;
 	juce::Label label;

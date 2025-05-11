@@ -52,4 +52,5 @@ private:
     BlockLookAndFeel globalLookAndFeel;
 
     void optionSelected();
+    void addOscillator();
 };

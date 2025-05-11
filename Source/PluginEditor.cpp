@@ -106,10 +106,7 @@ void ModCablesAudioProcessorEditor::optionSelected()
     {
     case 1:
         {
-        Oscillator* oscillator = new Oscillator();
-        addAndMakeVisible(oscillator);
-        blockComponents.push_back(oscillator);
-        oscillator->setLocation(options.getPosition() - location);
+        addOscillator();
         break;
         }
     case 2:
@@ -120,4 +117,18 @@ void ModCablesAudioProcessorEditor::optionSelected()
     }
 
     options.setSelectedId(-1);
+}
+
+void ModCablesAudioProcessorEditor::addOscillator()
+{
+    OscillatorParams* params = new OscillatorParams();
+    
+    Oscillator* oscillator = new Oscillator(params);
+    addAndMakeVisible(oscillator);
+    blockComponents.push_back(oscillator);
+    oscillator->setLocation(options.getPosition() - location);
+    oscillator->name.setText((juce::String)blockComponents.size(), juce::sendNotification);
+
+    oscillator->updateOscillatorParams();
+    audioProcessor.oscillators.push_back(params);
 }
