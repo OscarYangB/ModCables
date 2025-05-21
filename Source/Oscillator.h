@@ -5,6 +5,7 @@
 #include "IconButton.h"
 #include "BlockComponent.h"
 #include "PluginProcessor.h"
+#include "Connector.h"
 
 class Oscillator : public BlockComponent, juce::Button::Listener, juce::Slider::Listener
 {
@@ -50,10 +51,10 @@ private:
 	juce::Label sustainLabel;
 	juce::Label releaseLabel;
 
-	juce::ImageComponent volumeMod;
-	juce::ImageComponent pitchMod;
-	juce::ImageComponent phaseMod;
-	juce::ImageComponent output;
+	Connector volumeMod = Connector(RED);
+	Connector pitchMod = Connector(BLUE);
+	Connector phaseMod = Connector(YELLOW);
+	Connector output = Connector(GRAY);
 
 	OscillatorParams* params;
 };

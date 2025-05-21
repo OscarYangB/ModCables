@@ -103,17 +103,9 @@ Oscillator::Oscillator(OscillatorParams* newParams)
 
 	addAndMakeVisible(keyTrack);
 
-	volumeMod.setImage(juce::Image(juce::ImageFileFormat::loadFrom(BinaryData::EmptyConnector_Yellow_png, BinaryData::EmptyConnector_Yellow_pngSize)));
 	addAndMakeVisible(volumeMod);
-	
-	juce::Image image = juce::Image(juce::ImageFileFormat::loadFrom(BinaryData::EmptyConnector_png, BinaryData::EmptyConnector_pngSize));
-	pitchMod.setImage(image);
 	addAndMakeVisible(pitchMod);
-
-	phaseMod.setImage(juce::Image(juce::ImageFileFormat::loadFrom(BinaryData::EmptyConnector_Red_png, BinaryData::EmptyConnector_Red_pngSize)));
 	addAndMakeVisible(phaseMod);
-
-	output.setImage(juce::Image(juce::ImageFileFormat::loadFrom(BinaryData::EmptyConnector_Gray_png, BinaryData::EmptyConnector_Gray_pngSize)));
 	addAndMakeVisible(output);
 
 	setSize(100, 100);
