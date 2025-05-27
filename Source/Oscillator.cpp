@@ -38,7 +38,7 @@ Oscillator::Oscillator(OscillatorParams* newParams)
 	addAndMakeVisible(volume);
 
 	pitch.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-	pitch.setRange(-200.f, 200.f);
+	pitch.setRange(-500.f, 500.f);
 	pitch.setValue(0.0f);
 	pitch.setDoubleClickReturnValue(true, 0.f);
 	pitch.setTextValueSuffix("%");

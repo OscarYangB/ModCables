@@ -143,7 +143,7 @@ void ModCablesAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     {
         for (OscillatorParams* oscillator : oscillators)
         {
-            float value = oscillator->evaluate(getSampleRate(), 1000, false);
+            float value = oscillator->evaluate(getSampleRate(), 1000, false, true);
 
             for (int channel = 0; channel < totalNumInputChannels; ++channel)
             {

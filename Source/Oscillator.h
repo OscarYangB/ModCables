@@ -95,17 +95,18 @@ struct OscillatorParams
 
     float time = 0.f;
 
-    float evaluate(float sampleRate, float timeElapsed, bool released)
+    float evaluate(float sampleRate, float timeElapsed, bool released, bool progressTime)
     {
         float value = 0.f;
 
         float amplitudeMod = 0.5f;
-        float frequencyMod = 440.f;
-        frequencyMod += frequencyMod * (pitch / 100.f);
+        float frequencyMod = 440.f * powf(2, pitch / 100.f);
+
         float phaseMod = 0.f;
 
         for (int i = 0; i < pitchModSources.size(); i++) {
-            frequencyMod += frequencyMod * pitchModSources[i]->getOscillatorParams()->evaluate(sampleRate, timeElapsed, released);
+            float mod = pitchModSources[i]->getOscillatorParams()->evaluate(sampleRate, timeElapsed, released, false);
+            frequencyMod *= 1.f + mod;
         }
 
         switch (type)
@@ -124,7 +125,9 @@ struct OscillatorParams
             break;
         }
 
-        time += 1.f / sampleRate;
+        if (progressTime) {
+            time += 1.f / sampleRate;
+        }
 
         value *= volume;
 
