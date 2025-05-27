@@ -13,18 +13,21 @@
 #include <JuceHeader.h>
 #include "BlockLink.h"
 
-enum ConnectorColour 
+enum ConnectorColour
 {
-    RED,
-    YELLOW,
-    BLUE,
-    GRAY
+    AM,
+    FM,
+    PM,
+    OUT
 };
+
+class Oscillator;
 
 class Connector : public juce::Component, juce::Timer
 {
 public:
-    Connector(ConnectorColour newColour);
+    Connector(ConnectorColour newColour, Oscillator* newOscillator);
+    Connector();
 
     void mouseDown(const juce::MouseEvent& event) override;
     void mouseUp(const juce::MouseEvent& event) override;
@@ -33,9 +36,13 @@ public:
 
     void timerCallback();
 
+    Oscillator* getOscillator();
+    ConnectorColour getType();
+ 
 private:
     ConnectorColour colour;
-    juce::ImageComponent image;
+    juce::ImageComponent image = juce::ImageComponent();
+    Oscillator* oscillator;
 
     std::vector<BlockLink*> connections = std::vector<BlockLink*>();
     BlockLink* draggingConnection = nullptr;

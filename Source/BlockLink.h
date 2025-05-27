@@ -18,7 +18,10 @@ public:
 
     void paint(juce::Graphics& g) override;
     void timerCallback();
+    
+    bool isDragging = true;
 
 private:
     juce::Point<int> start;
+    juce::Point<int> endPoint;
 };

@@ -186,6 +186,28 @@ void Oscillator::updateOscillatorParams()
 	}
 }
 
+void Oscillator::addConnectedOscillator(Connector* connector, Oscillator* oscillator)
+{
+	switch (connector->getType()) {
+	case AM:
+		params->amplitudeModSources.push_back(oscillator);
+		break;
+	case FM:
+		params->pitchModSources.push_back(oscillator);
+		break;
+	case PM:
+		params->phaseModSources.push_back(oscillator);
+		break;
+	default:
+		break;
+	}
+}
+
+OscillatorParams* Oscillator::getOscillatorParams()
+{
+	return params;
+}
+
 void Oscillator::buttonStateChanged(juce::Button* button)
 {
 	if (button == &keyTrack.button) {

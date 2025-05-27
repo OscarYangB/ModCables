@@ -9,93 +9,11 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "Oscillator.h"
 
 //==============================================================================
 /**
 */
-
-float inline lerp(float a, float b, float t)
-{
-    return a + t * (b - a);
-}
-
-enum OscillatorType
-{
-    SIN,
-    SQUARE,
-    TRIANGLE,
-    SAW
-};
-
-struct OscillatorParams 
-{
-    float volume;
-    float pitch;
-    float phase;
-
-    bool keyTrack;
-    
-    float attack;
-    float decay;
-    float sustain;
-    float release;
-
-    OscillatorType type;
-
-    std::vector<int> amplitudeModSources;
-    std::vector<int> pitchModSources;
-    std::vector<int> phaseModSources;
-
-    float time = 0.f;
-
-    float evaluate(float sampleRate, float timeElapsed, bool released) 
-    {
-        float value = 0.f;
-
-        switch (type) 
-        {
-        case SIN:
-            value = sin(440 * 2 * juce::float_Pi * time);
-            break;
-        case SQUARE:
-            //value = ti(time);
-            break;
-        case TRIANGLE:
-            //value = sinf(time);
-            break;
-        case SAW:
-            //value = sinf(time);
-            break;
-        }
-
-        time += 1.f / sampleRate;
-        
-        value *= volume;
-
-        if (!released)
-        {
-            if (timeElapsed < attack)
-            {
-                value *= timeElapsed / attack;
-            }
-            else if (timeElapsed < attack + decay)
-            {
-                value *= lerp(1.f, sustain, (timeElapsed - attack) / decay);
-            }
-            else
-            {
-                value *= sustain;
-            }
-        }
-        else 
-        {
-            value *= 1 - (timeElapsed / release);
-        }
-
-        return value;
-    }
-
-};
 
 class ModCablesAudioProcessor  : public juce::AudioProcessor
                             #if JucePlugin_Enable_ARA
