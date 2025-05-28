@@ -163,7 +163,7 @@ void Oscillator::updateOscillatorParams()
 {
 	params->volume = volume.getValue() / 100.f;
 	params->pitch = pitch.getValue();
-	params->phase = pitch.getValue();
+	params->phase = phase.getValue();
 
 	params->keyTrack = keyTrack.button.getToggleState();
 

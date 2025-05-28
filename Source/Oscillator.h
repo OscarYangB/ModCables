@@ -100,7 +100,7 @@ struct OscillatorParams
         float amplitude = 0.2f * volume;
         float frequency = 440.f * powf(2, pitch / 100.f);
 
-        float phaseMod = 0.f;
+        float phaseMod = phase;
 
         for (int i = 0; i < pitchModSources.size(); i++) {
             float mod = 5 * pitchModSources[i]->getOscillatorParams()->evaluate(sampleRate, timeElapsed, released, false);
@@ -118,7 +118,7 @@ struct OscillatorParams
         switch (type)
         {
         case SIN:
-            value = amplitude * sin(time);
+            value = amplitude * sin(time + juce::degreesToRadians(phaseMod));
             break;
         case SQUARE:
             //value = ti(time);

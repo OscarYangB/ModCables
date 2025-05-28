@@ -22,6 +22,7 @@ void BlockLink::paint(juce::Graphics& g)
     if (isDragging) {
         endPoint = juce::Point<int>(getMouseXYRelative().x, getMouseXYRelative().y);
     }
+    
     g.drawLine(start.x, start.y, endPoint.x, endPoint.y, 3.f);
 }
 
