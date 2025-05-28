@@ -93,35 +93,32 @@ struct OscillatorParams
     std::vector<Oscillator*> pitchModSources = std::vector<Oscillator*>();
     std::vector<Oscillator*> phaseModSources = std::vector<Oscillator*>();
 
-    float lastPoint = 0.f;
-    float time = 0.f;
+    float time = 0.f; // 0 to 2pi
     
     float evaluate(float sampleRate, float timeElapsed, bool released, bool progressTime)
     {
-        float value = 0.f;
-
-        float amplitudeMod = 0.1f;
-        float frequencyMod = 880.f * powf(2, pitch / 100.f);
+        float amplitude = 0.2f * volume;
+        float frequency = 440.f * powf(2, pitch / 100.f);
 
         float phaseMod = 0.f;
 
         for (int i = 0; i < pitchModSources.size(); i++) {
-            float mod = pitchModSources[i]->getOscillatorParams()->evaluate(sampleRate, timeElapsed, released, false);
-            frequencyMod *= 1.f + mod;
+            float mod = 5 * pitchModSources[i]->getOscillatorParams()->evaluate(sampleRate, timeElapsed, released, false);
+            frequency *= (1.f + mod);
         }
 
         for (int i = 0; i < amplitudeModSources.size(); i++) {
             float mod = amplitudeModSources[i]->getOscillatorParams()->evaluate(sampleRate, timeElapsed, released, false);
-            amplitudeMod *= 1.f + mod;
+            amplitude *= 1.f + mod;
         }
 
-        float newPoint = (frequencyMod * 2 * juce::float_Pi * time) + phaseMod - lastPoint;
-        lastPoint = newPoint;
-        
+        constexpr float twoPi = 2.f * juce::float_Pi;
+        float value = 0.f;
+                        
         switch (type)
         {
         case SIN:
-            value = amplitudeMod * sin(newPoint);
+            value = amplitude * sin(time);
             break;
         case SQUARE:
             //value = ti(time);
@@ -133,19 +130,15 @@ struct OscillatorParams
             //value = sinf(time);
             break;
         }
-
+    
         if (progressTime) {
-            time += 1.f / sampleRate;
+            time += (frequency * twoPi) / sampleRate;
 
-            float wavelength = 1.f / frequencyMod;
-
-            if (time > wavelength) {
-                time -= wavelength;
+            if (time > twoPi) {
+                time -= twoPi;
             }
         }
-
-        value *= volume;
-
+        
         if (!released)
         {
             if (timeElapsed < attack)

@@ -145,6 +145,10 @@ void ModCablesAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
         {
             float value = oscillator->evaluate(getSampleRate(), 1000, false, true);
 
+            if (oscillator->amplitudeModSources.empty() && oscillator->pitchModSources.empty() && oscillator->phaseModSources.empty()) {
+                continue; // Don't output modulators for now
+            }
+
             for (int channel = 0; channel < totalNumInputChannels; ++channel)
             {
                 samples[channel][sampleNumber] += value;

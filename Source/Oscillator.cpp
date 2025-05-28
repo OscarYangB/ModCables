@@ -30,8 +30,8 @@ Oscillator::Oscillator(OscillatorParams* newParams)
 	addAndMakeVisible(phaseLabel);
 
 	volume.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-	volume.setRange(0.0, 100.0);
-	volume.setValue(50.0f);
+	volume.setRange(0.0, 500.0);
+	volume.setValue(100.0f);
 	volume.setDoubleClickReturnValue(true, 50.f);
 	volume.setTextValueSuffix("%");
 	volume.addListener(this);
