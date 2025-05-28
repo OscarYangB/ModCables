@@ -14,14 +14,14 @@
 
 class BlockLink : public juce::Component, juce::Timer {
 public:
-    BlockLink(juce::Point<int> newStart);
+    BlockLink(juce::Component* newStartComp);
 
     void paint(juce::Graphics& g) override;
     void timerCallback();
     
-    bool isDragging = true;
+    void setEndComp(juce::Component* newEndComp);
 
 private:
-    juce::Point<int> start;
-    juce::Point<int> endPoint;
+    juce::Component* startComp = nullptr;
+    juce::Component* endComp = nullptr;
 };

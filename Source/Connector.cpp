@@ -58,9 +58,7 @@ ConnectorColour Connector::getType()
 void Connector::mouseDown(const juce::MouseEvent& event)
 {
     if (colour == OUT) {
-        juce::Point<int> location = getScreenPosition() - getTopLevelComponent()->getScreenPosition();
-        location += juce::Point<int>(getWidth() / 2.f, getHeight() / 2.f);
-        draggingConnection = new BlockLink(location);
+        draggingConnection = new BlockLink(this);
         getTopLevelComponent()->addAndMakeVisible(draggingConnection);
     }
 }
@@ -73,7 +71,7 @@ void Connector::mouseUp(const juce::MouseEvent& event)
         Connector* connector = (Connector*)comp;
         connector->getOscillator()->addConnectedOscillator(connector, getOscillator());
 
-        draggingConnection->isDragging = false;
+        draggingConnection->setEndComp(connector);
     }
     else 
     {
