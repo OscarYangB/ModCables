@@ -147,7 +147,7 @@ void ModCablesAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
 
             for (int channel = 0; channel < totalNumInputChannels; ++channel)
             {
-                samples[channel][sampleNumber] = value;
+                samples[channel][sampleNumber] += value;
             }
         }
     }

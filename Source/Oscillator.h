@@ -93,14 +93,15 @@ struct OscillatorParams
     std::vector<Oscillator*> pitchModSources = std::vector<Oscillator*>();
     std::vector<Oscillator*> phaseModSources = std::vector<Oscillator*>();
 
+    float lastPoint = 0.f;
     float time = 0.f;
-
+    
     float evaluate(float sampleRate, float timeElapsed, bool released, bool progressTime)
     {
         float value = 0.f;
 
-        float amplitudeMod = 0.5f;
-        float frequencyMod = 440.f * powf(2, pitch / 100.f);
+        float amplitudeMod = 0.1f;
+        float frequencyMod = 880.f * powf(2, pitch / 100.f);
 
         float phaseMod = 0.f;
 
@@ -109,10 +110,18 @@ struct OscillatorParams
             frequencyMod *= 1.f + mod;
         }
 
+        for (int i = 0; i < amplitudeModSources.size(); i++) {
+            float mod = amplitudeModSources[i]->getOscillatorParams()->evaluate(sampleRate, timeElapsed, released, false);
+            amplitudeMod *= 1.f + mod;
+        }
+
+        float newPoint = (frequencyMod * 2 * juce::float_Pi * time) + phaseMod - lastPoint;
+        lastPoint = newPoint;
+        
         switch (type)
         {
         case SIN:
-            value = amplitudeMod * sin((frequencyMod * 2 * juce::float_Pi * time) + phaseMod);
+            value = amplitudeMod * sin(newPoint);
             break;
         case SQUARE:
             //value = ti(time);
@@ -127,6 +136,12 @@ struct OscillatorParams
 
         if (progressTime) {
             time += 1.f / sampleRate;
+
+            float wavelength = 1.f / frequencyMod;
+
+            if (time > wavelength) {
+                time -= wavelength;
+            }
         }
 
         value *= volume;
