@@ -140,6 +140,12 @@ void ModCablesAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
         if (!message.isNoteOnOrOff()) {
             continue;
         }
+        
+        // Needs to change state when the buffer is iterating instead of only at start!
+        if (isNoteOn != message.isNoteOn()) {
+            isNoteOn = message.isNoteOn();
+            timeSinceEvent = 0.f;
+        }
 
         int noteNumber = message.getNoteNumber();
         frequency = juce::MidiMessage::getMidiNoteInHertz(noteNumber);
@@ -155,7 +161,7 @@ void ModCablesAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     {
         for (OscillatorParams* oscillator : oscillators)
         {
-            float value = oscillator->evaluate(getSampleRate(), 1000, false, true, frequency);
+            float value = oscillator->evaluate(getSampleRate(), timeSinceEvent, !isNoteOn, true, frequency);
 
             if (oscillator->amplitudeModSources.empty() && oscillator->pitchModSources.empty() && oscillator->phaseModSources.empty()) {
                 continue; // Don't output modulators for now
@@ -166,6 +172,8 @@ void ModCablesAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
                 samples[channel][sampleNumber] += value;
             }
         }
+
+        timeSinceEvent += 1.f / getSampleRate();
     }
 }
 

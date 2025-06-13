@@ -162,7 +162,8 @@ struct OscillatorParams
         }
         else
         {
-            value *= 1 - (timeElapsed / release);
+            // Instead of sustain, it should start from where it stopped attacking!
+            value *= fmaxf(sustain - (timeElapsed / release), 0.f);
         }
 
         return value;

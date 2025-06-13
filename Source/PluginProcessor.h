@@ -59,6 +59,9 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
     float frequency = 0.f;
+    float timeSinceEvent = 0.f;
+    bool isNoteOn = false;
+
     std::vector<OscillatorParams*> oscillators = std::vector<OscillatorParams*>();
 
 private:
