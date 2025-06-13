@@ -58,6 +58,7 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    float frequency = 0.f;
     std::vector<OscillatorParams*> oscillators = std::vector<OscillatorParams*>();
 
 private:

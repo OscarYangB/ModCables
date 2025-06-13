@@ -47,6 +47,8 @@ private:
     juce::Point<int> currentPoint;
     juce::Point<int> location;
 
+    juce::FilenameComponent tuning = juce::FilenameComponent("tuning", {}, true, false, false, ".scl", {}, "Select Tuning File");
+
     juce::ComboBox options;
     std::vector<BlockComponent*> blockComponents = std::vector<BlockComponent*>();
     BlockLookAndFeel globalLookAndFeel;

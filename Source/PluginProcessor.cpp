@@ -133,6 +133,18 @@ void ModCablesAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
 {
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
+    
+    for (juce::MidiBufferIterator it = midiMessages.begin(); it != midiMessages.end(); it++) {
+        juce::MidiMessage message = (*it).getMessage();
+        
+        if (!message.isNoteOnOrOff()) {
+            continue;
+        }
+
+        int noteNumber = message.getNoteNumber();
+        frequency = juce::MidiMessage::getMidiNoteInHertz(noteNumber);
+    }
+
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
@@ -143,13 +155,13 @@ void ModCablesAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     {
         for (OscillatorParams* oscillator : oscillators)
         {
-            float value = oscillator->evaluate(getSampleRate(), 1000, false, true);
+            float value = oscillator->evaluate(getSampleRate(), 1000, false, true, frequency);
 
             if (oscillator->amplitudeModSources.empty() && oscillator->pitchModSources.empty() && oscillator->phaseModSources.empty()) {
                 continue; // Don't output modulators for now
             }
 
-            for (int channel = 0; channel < totalNumInputChannels; ++channel)
+            for (int channel = 0; channel < totalNumOutputChannels; ++channel)
             {
                 samples[channel][sampleNumber] += value;
             }

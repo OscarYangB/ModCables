@@ -95,24 +95,30 @@ struct OscillatorParams
 
     float time = 0.f; // 0 to 2pi
     
-    float evaluate(float sampleRate, float timeElapsed, bool released, bool progressTime)
+    float evaluate(float sampleRate, float timeElapsed, bool released, bool progressTime, float frequency)
     {
+        constexpr float twoPi = 2.f * juce::float_Pi;
+        
         float amplitude = 0.2f * volume;
-        float frequency = 440.f * powf(2, pitch / 100.f);
+        frequency *= powf(2, pitch / 100.f);
 
         float phaseMod = phase;
 
         for (int i = 0; i < pitchModSources.size(); i++) {
-            float mod = 5 * pitchModSources[i]->getOscillatorParams()->evaluate(sampleRate, timeElapsed, released, false);
+            float mod = 5 * pitchModSources[i]->getOscillatorParams()->evaluate(sampleRate, timeElapsed, released, false, frequency);
             frequency *= (1.f + mod);
         }
 
         for (int i = 0; i < amplitudeModSources.size(); i++) {
-            float mod = amplitudeModSources[i]->getOscillatorParams()->evaluate(sampleRate, timeElapsed, released, false);
+            float mod = amplitudeModSources[i]->getOscillatorParams()->evaluate(sampleRate, timeElapsed, released, false, frequency);
             amplitude *= 1.f + mod;
         }
 
-        constexpr float twoPi = 2.f * juce::float_Pi;
+        for (int i = 0; i < phaseModSources.size(); i++) {
+            float mod = phaseModSources[i]->getOscillatorParams()->evaluate(sampleRate, timeElapsed, released, false, frequency);
+            phase += mod * twoPi;
+        }
+
         float value = 0.f;
                         
         switch (type)

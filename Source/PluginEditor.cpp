@@ -21,6 +21,8 @@ ModCablesAudioProcessorEditor::ModCablesAudioProcessorEditor (ModCablesAudioProc
     options.setVisible(false);
     options.onChange = [this] { optionSelected(); };
 
+    addAndMakeVisible(tuning);
+
     startTimer(16);
     setSize(700, 700);
 }
@@ -43,22 +45,14 @@ void ModCablesAudioProcessorEditor::updateDragging()
 //==============================================================================
 void ModCablesAudioProcessorEditor::paint (juce::Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll(juce::Colour::fromRGB(73, 62, 53));
-
-    /*
-    g.setColour (juce::Colours::white);
-    g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
-
-    g.drawRect(juce::Rectangle<float>(100, 100, 200, 200));
-    g.drawImage(backgroundImage, currentPoint.getX(), currentPoint.getY(), 50.0f, 50.0f, 0.0f, 0.0f, 880.0f, 880.0f);
-    */
 
     for (BlockComponent* blockComponent : blockComponents) 
     {
         blockComponent->setBlockBounds(location.x, location.y, 200, 200);
     }
+
+    tuning.setBounds(0, 0, 200, 30);
 }
 
 void ModCablesAudioProcessorEditor::resized()
